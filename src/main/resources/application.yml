@@ -1,0 +1,16 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/product-service
+  application:
+    name: product-service
+  jpa:
+    hibernate:
+      ddl-auto: update # This will create/update the tables based on your entities
+    show-sql: true # This will show SQL queries in logs
+server:
+  port: 8050
+
+  servlet:
+    context-path: /product
+

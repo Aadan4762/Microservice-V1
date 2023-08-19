@@ -1,13 +1,18 @@
+
 spring:
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/product-service
   application:
-    name: product-service
+    name: foo
+  datasource:
+    url: jdbc:postgresql://localhost:5432/product-service
+    password: postgres
+    username: Password
   jpa:
     hibernate:
-      ddl-auto: update # This will create/update the tables based on your entities
-    show-sql: true # This will show SQL queries in logs
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
 server:
   port: 8050
 

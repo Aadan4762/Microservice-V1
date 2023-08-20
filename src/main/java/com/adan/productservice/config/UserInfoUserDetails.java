@@ -1,34 +1,33 @@
-package com.adan.productservice.user;
+package com.adan.productservice.config;
 
-import jakarta.persistence.*;
-import lombok.*;
-import org.springframework.data.annotation.Id;
+import com.adan.productservice.user.UserInfo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-@Entity(name = "user")
-public class User implements UserDetails {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer userId;
-    private String firstName;
-    private String lastName;
-    private String email;
+public class UserInfoUserDetails implements UserDetails {
+
+
+    private String name;
     private String password;
-    @Enumerated(EnumType.STRING)
-     private Role role;
+    private List<GrantedAuthority> authorities;
+
+    public UserInfoUserDetails(UserInfo userInfo) {
+        name=userInfo.getName();
+        password=userInfo.getPassword();
+        authorities= Arrays.stream(userInfo.getRoles().split(","))
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return authorities;
     }
 
     @Override
@@ -38,7 +37,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return name;
     }
 
     @Override

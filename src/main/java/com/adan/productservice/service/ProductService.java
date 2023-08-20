@@ -5,8 +5,8 @@ import com.adan.productservice.dto.ProductResponse;
 import com.adan.productservice.entity.Product;
 import com.adan.productservice.exception.ProductNotFoundException;
 import com.adan.productservice.repository.ProductRepository;
-import com.adan.productservice.user.UserInfo;
-import com.adan.productservice.user.UserInfoRepository;
+import com.adan.productservice.user.UserRepository;
+import com.adan.productservice.user.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     @Autowired
-    private UserInfoRepository userInfoRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -80,9 +80,9 @@ public class ProductService {
                 .description(product.getDescription())
                 .build();
     }
-    public String addUser(UserInfo userInfo) {
-        userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
-        userInfoRepository.save(userInfo);
+    public String addUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
         return "user added to system ";
     }
 }

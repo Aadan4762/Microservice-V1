@@ -1,11 +1,12 @@
 package com.adan.productservice.token;
 
+
+import com.adan.productservice.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.catalina.User;
 
 @Data
 @Builder
@@ -29,6 +30,6 @@ public class Token {
     public boolean expired;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+  //  @JoinColumn(name = "user_id")
     public User user;
 }
